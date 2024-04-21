@@ -2,5 +2,5 @@
 
 public interface IWeatherForecastService
 {
-    IEnumerable<WeatherForecast> GetForecast();
+    IAsyncEnumerable<WeatherForecast> GetForecast();
 }

@@ -1,25 +1,29 @@
-﻿namespace AspNetCoreSample.Logic;
+﻿using AspNetCoreSample.Outbound;
+
+namespace AspNetCoreSample.Logic;
 
 public class WeatherForecastService : IWeatherForecastService
 {
-    private readonly string[] _summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly IForecastStorage _forecastStorage;
 
-
-    public IEnumerable<WeatherForecast> GetForecast()
+    public WeatherForecastService(IForecastStorage forecastStorage)
     {
-        var forecast =  Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    _summaries[Random.Shared.Next(_summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
+        _forecastStorage = forecastStorage ?? throw new ArgumentNullException(nameof(forecastStorage));
+    }
+
+    public async IAsyncEnumerable<WeatherForecast> GetForecast()
+    {
+        var daysList = Enumerable.Range(1, 5);
+        foreach (var index in daysList)
+        {
+            var forecast = await GetFromStorage(index);
+            yield return forecast;
+        }
+    }
+    
+    private async Task<WeatherForecast> GetFromStorage(int daysFromNow)
+    {
+        var outbound = await _forecastStorage.GetForecast(DateOnly.FromDateTime(DateTime.Now.AddDays(daysFromNow)));
+        return new WeatherForecast(outbound.Date, outbound.TemperatureC, outbound.Summary);
     }
 }
-
-// use https://open-meteo.com/
