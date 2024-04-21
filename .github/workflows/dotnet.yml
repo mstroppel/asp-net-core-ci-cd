@@ -2,6 +2,9 @@ name: dotnet package
 
 on: [push, pull_request]
 
+env:
+  DOTNET_VERSION: '8.0.x'
+
 jobs:
   build:
 
@@ -12,7 +15,7 @@ jobs:
       - name: Setup dotnet 8.x
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.x
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
       - name: Display dotnet version
         run: dotnet --version
       - name: Install dependencies
