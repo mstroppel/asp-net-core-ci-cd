@@ -18,7 +18,7 @@ app.UseHttpsRedirection();
 
 app.MapGet("/weatherforecast", (IWeatherForecastService weatherForecastService) =>
     {
-        var forecast = weatherForecastService.GetForecast();
+        var forecast = weatherForecastService.GetForecasts();
         return forecast;
     })
     .WithName("GetWeatherForecast")

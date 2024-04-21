@@ -2,5 +2,5 @@
 
 public interface IForecastStorage
 {
-    Task<OutboundWeatherForecast> GetForecast(DateOnly date);
+    OutboundWeatherForecast GetForecast(DateOnly date);
 }

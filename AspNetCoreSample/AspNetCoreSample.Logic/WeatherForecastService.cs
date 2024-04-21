@@ -2,28 +2,18 @@
 
 namespace AspNetCoreSample.Logic;
 
-public class WeatherForecastService : IWeatherForecastService
+public class WeatherForecastService(IForecastStorage forecastStorage) : IWeatherForecastService
 {
-    private readonly IForecastStorage _forecastStorage;
+    private readonly IForecastStorage _forecastStorage = forecastStorage ?? throw new ArgumentNullException(nameof(forecastStorage));
 
-    public WeatherForecastService(IForecastStorage forecastStorage)
+    public IEnumerable<WeatherForecast> GetForecasts()
     {
-        _forecastStorage = forecastStorage ?? throw new ArgumentNullException(nameof(forecastStorage));
-    }
-
-    public async IAsyncEnumerable<WeatherForecast> GetForecast()
-    {
-        var daysList = Enumerable.Range(1, 5);
-        foreach (var index in daysList)
+        var forecasts = Enumerable.Range(1, 5).Select(index =>
         {
-            var forecast = await GetFromStorage(index);
-            yield return forecast;
-        }
-    }
-    
-    private async Task<WeatherForecast> GetFromStorage(int daysFromNow)
-    {
-        var outbound = await _forecastStorage.GetForecast(DateOnly.FromDateTime(DateTime.Now.AddDays(daysFromNow)));
-        return new WeatherForecast(outbound.Date, outbound.TemperatureC, outbound.Summary);
+            var dateOfForecast = DateOnly.FromDateTime(DateTime.Now.AddDays(index));
+            var outbound = _forecastStorage.GetForecast(dateOfForecast);
+            return new WeatherForecast(outbound.Date, outbound.TemperatureC, outbound.Summary);
+        });
+        return forecasts;
     }
 }
