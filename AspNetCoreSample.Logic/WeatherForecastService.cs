@@ -8,7 +8,12 @@ public class WeatherForecastService(IForecastStorage forecastStorage) : IWeather
 
     public IEnumerable<WeatherForecast> GetForecasts()
     {
-        // TODO: implementation #1
-        return Array.Empty<WeatherForecast>();
+        var forecasts = Enumerable.Range(1, 5).Select(index =>
+        {
+            var dateOfForecast = DateOnly.FromDateTime(DateTime.Now.AddDays(index));
+            var outbound = _forecastStorage.GetForecast(dateOfForecast);
+            return new WeatherForecast(outbound.Date, outbound.TemperatureC, outbound.Summary);
+        });
+        return forecasts;
     }
 }
