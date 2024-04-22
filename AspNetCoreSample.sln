@@ -8,6 +8,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreSample.Logic.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreSample.Outbound", "AspNetCoreSample.Outbound\AspNetCoreSample.Outbound.csproj", "{0187EF2D-B79D-4DB8-A970-D199DF7BD1BC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F0AC8D9A-5E8A-4755-8463-615EA79D9A94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E245BF05-3BE7-4BA4-81BB-BAD7C0A585E7}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\publish.yml = .github\workflows\publish.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +38,8 @@ Global
 		{0187EF2D-B79D-4DB8-A970-D199DF7BD1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0187EF2D-B79D-4DB8-A970-D199DF7BD1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0187EF2D-B79D-4DB8-A970-D199DF7BD1BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E245BF05-3BE7-4BA4-81BB-BAD7C0A585E7} = {F0AC8D9A-5E8A-4755-8463-615EA79D9A94}
 	EndGlobalSection
 EndGlobal
