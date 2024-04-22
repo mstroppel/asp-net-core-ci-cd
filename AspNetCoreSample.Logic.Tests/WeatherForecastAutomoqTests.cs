@@ -19,6 +19,6 @@ public class WeatherForecastAutomoqTests
         var forecasts = systemUnderTest.GetForecasts();
 
         forecasts.Should().NotBeNull();
-        forecasts.Should().HaveCount(5);
+        forecasts.Should().HaveCount(6);
     }
 }
