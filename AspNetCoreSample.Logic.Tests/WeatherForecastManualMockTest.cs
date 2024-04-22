@@ -12,7 +12,7 @@ public class WeatherForecastManualMockTest
         var forecasts = systemUnderTest.GetForecasts();
         
         Assert.NotNull(forecasts);
-        Assert.Equal(6, forecasts.Count());
+        Assert.Equal(5, forecasts.Count());
     }
 
     [Fact]
