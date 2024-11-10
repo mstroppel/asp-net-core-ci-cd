@@ -9,6 +9,6 @@ public class WeatherForecastService(IForecastStorage forecastStorage) : IWeather
     public IEnumerable<WeatherForecast> GetForecasts()
     {
         // TODO: implementation #1
-        return Array.Empty<WeatherForecast>();
+        return [new WeatherForecast(DateOnly.FromDateTime(DateTime.Now), 15, "Sunny")];
     }
 }
