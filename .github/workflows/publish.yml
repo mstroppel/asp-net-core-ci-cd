@@ -3,37 +3,53 @@ name: publish to Azure
 on:
     push:
         branches: [ main ]
+    workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: wa-asp-net-core-test
-  AZURE_WEBAPP_PACKAGE_PATH: 'AspNetCoreSample'
   DOTNET_VERSION: '10.0.x'
+  AZURE_RESOURCE_GROUP: dev-marco
+  AZURE_WEBAPP_NAME: wa-aspnet-core-ci-demo
+  AZURE_WEBAPP_PACKAGE_PATH: 'AspNetCoreSample'
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repo
-      - uses: actions/checkout@main
-      
-      # Setup .NET Core SDK
-      - name: Setup .NET Core
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }} 
-      
-      # Run dotnet build and publish
-      - name: dotnet build and publish
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Publish app
         run: |
-          dotnet restore
-          dotnet build --configuration Release
-          dotnet publish --configuration Release --property:PublishDir=publish -r linux-x64 --self-contained true /p:UseAppHost=true 
-          
-      # Deploy to Azure Web apps
-      - name: 'Run Azure webapp deploy action using publish profile credentials'
+          dotnet publish ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/AspNetCoreSample.csproj \
+            --configuration Release \
+            --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy infrastructure (Bicep)
+        uses: azure/arm-deploy@v2
+        with:
+          scope: resourcegroup
+          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+          template: ./infra/main.bicep
+          parameters: ./infra/main.bicepparam
+
+      - name: Deploy web app
         uses: azure/webapps-deploy@v3
-        with: 
+        with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
