@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/AspNetCoreSample/AspNetCoreSample.csproj",
+                "${workspaceFolder}/AspNetCoreSample.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -18,12 +18,12 @@
             }
         },
         {
-            "label": "build-solution",
+            "label": "build-web",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/AspNetCoreSample.sln",
+                "${workspaceFolder}/AspNetCoreSample/AspNetCoreSample.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
