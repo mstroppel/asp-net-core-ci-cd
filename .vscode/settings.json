@@ -1,0 +1,6 @@
+{
+    "dotnet.defaultSolution": "AspNetCoreSample.sln",
+    "dotnet.testWindow.disableAutoRunOnBuild": false,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true
+}
