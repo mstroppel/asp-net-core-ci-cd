@@ -62,10 +62,10 @@ Do this once per target subscription. You need `az` logged in as someone with ri
 az deployment group create \
   --resource-group rg-aspnet-core-test \
   --template-file infra/main.bicep \
-  --parameters infra/main.parameters.example.json
+  --parameters infra/main.example.bicepparam
 ```
 
-Copy `main.parameters.example.json` to `main.parameters.json` and edit the values if you want a non-default web app name or region; the `.json` copy is gitignored.
+Copy `main.example.bicepparam` to `main.bicepparam` and edit the values if you want a non-default web app name or region; local `.bicepparam` files other than the example are gitignored.
 
 ### Deploy the app
 
