@@ -397,4 +397,8 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .idea
-myapp
+
+# Bicep compiled output and local parameter files
+infra/main.json
+infra/*.bicepparam
+!infra/main.example.bicepparam
