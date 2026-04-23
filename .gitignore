@@ -397,7 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .idea
-myapp
 
 # Bicep compiled output
 infra/main.json
