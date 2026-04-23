@@ -398,7 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 .idea
 
-# Bicep compiled output and local parameter files
+# Bicep compiled output (az bicep build → main.json, az bicep build-params → main.parameters.json)
 infra/main.json
-infra/*.bicepparam
-!infra/main.example.bicepparam
+infra/main.parameters.json

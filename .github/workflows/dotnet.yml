@@ -33,4 +33,4 @@ jobs:
       - name: Build Bicep template
         run: az bicep build --file infra/main.bicep
       - name: Build Bicep parameters
-        run: az bicep build-params --file infra/main.example.bicepparam
+        run: az bicep build-params --file infra/main.bicepparam
