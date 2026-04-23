@@ -10,6 +10,10 @@
             "args": [],
             "cwd": "${workspaceFolder}/AspNetCoreSample",
             "stopAtEntry": false,
+            "justMyCode": true,
+            "logging": {
+                "moduleLoad": false
+            },
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
