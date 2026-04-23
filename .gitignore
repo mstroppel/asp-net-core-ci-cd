@@ -398,3 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 .idea
 myapp
+
+# Bicep compiled output
+infra/main.json
+infra/main.parameters.json
