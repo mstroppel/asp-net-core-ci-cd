@@ -3,19 +3,19 @@ name: build and test
 on: [push, pull_request]
 
 env:
-  DOTNET_VERSION: '8.0.x'
+  DOTNET_VERSION: '10.0.x'
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-      - name: Setup dotnet 8.x
-        uses: actions/setup-dotnet@v3
+      - name: Setup dotnet 10.x
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }} 
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       - name: Display dotnet version
         run: dotnet --version
       - name: Install dependencies
