@@ -10,6 +10,7 @@ env:
   AZURE_RESOURCE_GROUP: dev-marco
   AZURE_WEBAPP_NAME: wa-aspnet-core-ci-demo
   AZURE_WEBAPP_PACKAGE_PATH: 'AspNetCoreSample'
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
   id-token: write
@@ -20,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -34,19 +35,22 @@ jobs:
             --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
 
       - name: Azure login (OIDC)
-        uses: azure/login@v2
+        uses: azure/login@v3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy infrastructure (Bicep)
-        uses: azure/arm-deploy@v2
+        uses: azure/bicep-deploy@v2
         with:
-          scope: resourcegroup
-          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-          template: ./infra/main.bicep
-          parameters: ./infra/main.bicepparam
+          type: deployment
+          operation: create
+          scope: resourceGroup
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resource-group-name: ${{ env.AZURE_RESOURCE_GROUP }}
+          template-file: ./infra/main.bicep
+          parameters-file: ./infra/main.bicepparam
 
       - name: Deploy web app
         uses: azure/webapps-deploy@v3
