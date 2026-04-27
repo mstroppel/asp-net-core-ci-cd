@@ -22,4 +22,11 @@ app.MapGet("/weatherforecast", (IWeatherForecastService weatherForecastService) 
     })
     .WithName("GetWeatherForecast");
 
+app.MapGet("/weatherforecast/tomorrow", (IWeatherForecastService weatherForecastService) =>
+    {
+        var forecast = weatherForecastService.GetTomorrowForecast();
+        return forecast;
+    })
+    .WithName("GetTomorrowWeatherForecast");
+
 app.Run();

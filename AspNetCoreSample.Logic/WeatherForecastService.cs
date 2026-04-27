@@ -16,4 +16,11 @@ public class WeatherForecastService(IForecastStorage forecastStorage) : IWeather
         });
         return forecasts;
     }
+
+    public WeatherForecast GetTomorrowForecast()
+    {
+        var tomorrow = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+        var forecast = _forecastStorage.GetForecast(tomorrow);
+        return new WeatherForecast(tomorrow, forecast.TemperatureC, forecast.Summary);
+    }
 }
