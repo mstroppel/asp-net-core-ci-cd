@@ -3,4 +3,5 @@
 public interface IWeatherForecastService
 {
     IEnumerable<WeatherForecast> GetForecasts();
+    WeatherForecast GetTomorrowForecast();
 }
