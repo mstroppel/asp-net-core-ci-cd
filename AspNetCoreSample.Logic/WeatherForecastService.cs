@@ -8,7 +8,7 @@ public class WeatherForecastService(IForecastStorage forecastStorage) : IWeather
 
     public IEnumerable<WeatherForecast> GetForecasts()
     {
-        var forecasts = Enumerable.Range(1, 5).Select(index =>
+        var forecasts = Enumerable.Range(1, 6).Select(index =>
         {
             var date = DateOnly.FromDateTime(DateTime.Now.AddDays(index));
             var forecast = _forecastStorage.GetForecast(date);
