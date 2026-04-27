@@ -15,6 +15,18 @@ public class WeatherForecastManualMockTest
         actual.Should().HaveCount(5);
     }
 
+    [Fact]
+    public void GetTomorrowForecast_ShouldReturnTomorrowsForecast()
+    {
+        var uut = new WeatherForecastService(new ForecastStorageMock());
+
+        var actual = uut.GetTomorrowForecast();
+
+        actual.Date.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+        actual.TemperatureC.Should().Be(25);
+        actual.Summary.Should().Be("Sunny");
+    }
+
     public class ForecastStorageMock : IForecastStorage
     {
         public OutboundWeatherForecast GetForecast(DateOnly date)

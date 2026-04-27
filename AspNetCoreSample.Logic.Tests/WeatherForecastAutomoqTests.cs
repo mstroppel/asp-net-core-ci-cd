@@ -20,4 +20,22 @@ public class WeatherForecastAutomoqTests
 
         actual.Should().HaveCount(5);
     }
+
+    [Fact]
+    public void GetTomorrowForecast_ShouldReturnTomorrowsForecast()
+    {
+        var tomorrow = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+        var storageMock = new Mock<IForecastStorage>();
+
+        storageMock.Setup(s => s.GetForecast(tomorrow))
+            .Returns(new OutboundWeatherForecast(tomorrow, 20, "Cloudy"));
+
+        var uut = new WeatherForecastService(storageMock.Object);
+
+        var actual = uut.GetTomorrowForecast();
+
+        actual.Date.Should().Be(tomorrow);
+        actual.TemperatureC.Should().Be(20);
+        actual.Summary.Should().Be("Cloudy");
+    }
 }
