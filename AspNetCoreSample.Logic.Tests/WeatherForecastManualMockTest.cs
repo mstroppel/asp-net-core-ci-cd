@@ -12,7 +12,7 @@ public class WeatherForecastManualMockTest
 
         var actual = uut.GetForecasts();
 
-        actual.Should().HaveCount(5);
+        actual.Should().HaveCount(6);
     }
 
     public class ForecastStorageMock : IForecastStorage
